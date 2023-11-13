@@ -63,6 +63,36 @@ bsc = {
     
 }
 
+zk = {
+    'name':'zk',
+    'RPC':'https://mainnet.era.zksync.io',
+    'USDT': { 
+        'adress': '0x493257fd37edb34451f62edf8d2a0c418852ba4c',
+        'abi' : abi_usdt,
+        'decimal': 6,
+            },
+    'USDC':{
+        'adress': '0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4',
+        'abi': abi_usdt,
+        'decimal': 6,
+             },
+}
+
+base = {
+    'name':'Base',
+    'RPC':'https://mainnet.base.org',
+    'USDT': { 
+        'adress': '0x493257fd37edb34451f62edf8d2a0c418852ba4c',
+        'abi' : abi_usdt,
+        'decimal': 6,
+            },
+    'USDC':{
+        'adress': '',
+        'abi': abi_usdt,
+        'decimal': 6,
+             },
+}
+
 poligon = {
     'name':'poligon',
     'RPC':'https://polygon-rpc.com',
@@ -84,15 +114,15 @@ def res_balance(set,token,adres):
     apruv_contrakt = w3.eth.contract(address=adres_token,abi=token['abi']) 
     amount_in = apruv_contrakt.functions.balanceOf(adres).call()
     eth_balance = w3.eth.get_balance(adres)
-    if amount_in > 0:
+    if amount_in >= 0:
         print(set['name'],end=' ')
         print(adres,end=' ')
         print(f'Native token {eth_balance/10**18}',end=' ')
         print('Usdt ', amount_in/(10**token['decimal']))
-    
-
 
 for i in adress:
     res_balance(arb,arb['USDT'],i)
     res_balance(avax,avax['USDT'],i)
     res_balance(bsc,bsc['USDT'],i)
+    res_balance(zk,zk['USDT'],i)
+    res_balance(zk,zk['USDC'],i)
